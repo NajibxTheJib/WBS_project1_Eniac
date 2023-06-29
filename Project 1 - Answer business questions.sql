@@ -44,96 +44,7 @@ SELECT
 FROM
 	order_items
 ;
-	
-SELECT 
-	orders.order_id, order_items.product_id , products.product_category_name , product_category_name_translation.product_category_name_english
-FROM 
-	orders
-JOIN 
-	order_items 
-		ON orders.order_id = order_items.order_id
-JOIN products 
-	ON order_items.product_id = products.product_id
-JOIN product_category_name_translation 
-	ON products.product_category_name = product_category_name_translation.product_category_name
-;
 
-
-SELECT 
-	orders.order_id, 
-    order_items.product_id , 
-    products.product_category_name , 
-    product_category_name_translation.product_category_name_english
-FROM 
-	order_items
-LEFT JOIN 
-	orders 
-		ON orders.order_id = order_items.order_id
-LEFT JOIN products 
-	ON order_items.product_id = products.product_id
-LEFT JOIN product_category_name_translation 
-	ON products.product_category_name = product_category_name_translation.product_category_name 
-;
-
-    
-SELECT 
-	orders.order_id, 
-    order_items.product_id , 
-    products.product_category_name , 
-    product_category_name_translation.product_category_name_english
-FROM 
-	orders
-JOIN 
-	order_items 
-		ON orders.order_id = order_items.order_id
-JOIN products 
-	ON order_items.product_id = products.product_id
-JOIN product_category_name_translation 
-	ON products.product_category_name = product_category_name_translation.product_category_name 
-WHERE
-	product_category_name_translation.product_category_name_english IN ('audio', 'cine_photo', 'console_games', 'electronics', 'computer', 'computers_accessories', 'pc_gamer', 'telephony')
-;
-
-SELECT 
-	orders.order_id, 
-    order_items.product_id , 
-    products.product_category_name , 
-    product_category_name_translation.product_category_name_english
-FROM 
-	order_items
-LEFT JOIN 
-	orders 
-		ON orders.order_id = order_items.order_id
-LEFT JOIN products 
-	ON order_items.product_id = products.product_id
-LEFT JOIN product_category_name_translation 
-	ON products.product_category_name = product_category_name_translation.product_category_name 
-WHERE
-	product_category_name_translation.product_category_name_english IN ('audio', 'cine_photo', 'console_games', 'electronics', 'computer', 'computers_accessories', 'pc_gamer', 'telephony')
-    
-;
-
-
-
-SELECT
-    products.product_category_name,
-    COUNT(*)
-FROM
-    order_items
-LEFT JOIN
-    orders
-        ON orders.order_id = order_items.order_id
-LEFT JOIN
-    products
-        ON order_items.product_id = products.product_id
-LEFT JOIN
-    product_category_name_translation
-        ON products.product_category_name = product_category_name_translation.product_category_name
-WHERE
-    product_category_name_translation.product_category_name_english IN ('audio', 'cine_photo', 'console_games', 'electronics', 'computer', 'computers_accessories', 'pc_gamer', 'telephony')
-GROUP BY
-    products.product_category_name
-;
 
 SELECT 
     DISTINCT products.product_category_name,
@@ -220,27 +131,6 @@ We definied as an expensive product, a product of price of 300 euros or more
 => 910 expensive products on the total of the 16924 sell products (Approx = 5,37%)
 
 */
-
-SELECT 
-	COUNT(*) AS count,
-CASE
-	WHEN price > 300 then 'expensive'
-    WHEN price <= 300 and price > 100 then 'not so expensive'
-    else 'cheap'
-    end as price_category
-FROM 
-	magist.order_items
-LEFT JOIN products 
-	ON order_items.product_id = products.product_id
-LEFT JOIN product_category_name_translation 
-	ON products.product_category_name = product_category_name_translation.product_category_name 
-WHERE
-	product_category_name_translation.product_category_name_english IN ('audio', 'cine_photo', 'console_games', 'electronics', 'computer', 'computers_accessories', 'pc_gamer', 'telephony')
-GROUP BY
-	price_category
-ORDER BY
-	price DESC
-;	
 
 SELECT 
     price_category,
@@ -334,5 +224,3 @@ WHERE
 100
 AS percentage
 ;
-
-SELECT
